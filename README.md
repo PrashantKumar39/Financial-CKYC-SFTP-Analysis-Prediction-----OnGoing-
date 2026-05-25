@@ -27,14 +27,17 @@ This project analyses **68,177 real SFTP connection logs** over 30 days across 5
 ### 🏠 Hero — Overview
 > The landing section shows live KPIs pulled from the backend API including total logs, failure rate, crisis duration, and the active ML model.
 
-![Hero Section](screenshots/hero.png)
+<img width="1410" height="749" alt="Screenshot 2026-05-25 at 18 57 38" src="https://github.com/user-attachments/assets/a6e4ee6a-cc27-4cb9-9b37-5b781bbd783b" />
 
 ---
 
 ### 📊 Live Analytics Dashboard
 > Interactive charts showing daily failure rate vs request volume, failures per user, error type distribution (doughnut), and failure rate by operation type. The crisis window (Feb 14–19) is highlighted.
 
-![Dashboard](screenshots/dashboard.png)
+## Dashboard
+
+<img width="647" height="727" alt="Screenshot 2026-05-25 at 18 59 57" src="https://github.com/user-attachments/assets/814387c9-6f27-4157-b615-188edd889fa5" />
+
 
 ---
 
@@ -48,14 +51,19 @@ This project analyses **68,177 real SFTP connection logs** over 30 days across 5
 ### 🤖 Failure Predictor — FAIL result
 > Same predictor showing a HIGH risk scenario — 88.6% failure probability for a Rename operation by User 4 at 19:00.
 
-![Prediction Fail](screenshots/predict_fail.png)
+<img width="697" height="553" alt="Screenshot 2026-05-25 at 19 01 13" src="https://github.com/user-attachments/assets/1c510468-6cd0-4d15-8c0d-829ea9092c9c" />
+
+<img width="686" height="529" alt="Screenshot 2026-05-25 at 19 02 58" src="https://github.com/user-attachments/assets/f40b5856-76d2-470d-aa1e-df558235c499" />
+
+
+
 
 ---
 
 ### 📄 About This Work
 > Project summary cards covering the Problem, Approach, Model, and Impact — plus the full tech stack used.
 
-![About Section](screenshots/about.png)
+<img width="1336" height="536" alt="Screenshot 2026-05-25 at 19 11 56" src="https://github.com/user-attachments/assets/afda71e7-6028-4ef3-a3e4-110ae0aa6298" />
 
 ---
 
@@ -283,7 +291,7 @@ Covers: data loading → EDA (10 analyses) → feature engineering → model tra
 
 ## 👤 Author
 
-**[Your Name]**
+**PRASHANT KUMAR**
 - GitHub: [@your_username](https://github.com/your_username)
 - LinkedIn: [your-linkedin](https://linkedin.com/in/your-linkedin)
 
