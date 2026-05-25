@@ -44,7 +44,9 @@ This project analyses **68,177 real SFTP connection logs** over 30 days across 5
 ### 🤖 Failure Predictor — SUCCESS result
 > User sets operation type, user ID, hour of day, elapsed seconds, week number, and context flags. The model returns a failure probability ring, verdict badge, and risk level chip.
 
-![Prediction Success](screenshots/predict_success.png)
+<img width="1009" height="645" alt="Screenshot 2026-05-25 at 19 20 41" src="https://github.com/user-attachments/assets/376dae7c-2d60-43d5-b209-3a12ab5e380c" />
+
+
 
 ---
 
