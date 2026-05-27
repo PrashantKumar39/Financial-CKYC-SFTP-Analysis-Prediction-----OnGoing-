@@ -112,6 +112,11 @@ No early warning system existed. Regulatory penalties were a real risk.
 | Random Forest | Strong but slower |
 | **XGBoost** ✅ | **Best performer — selected** |
 
+<img width="1034" height="415" alt="Screenshot 2026-05-27 at 11 55 39" src="https://github.com/user-attachments/assets/60a86ed2-20ec-4501-9786-287e8ddd2f68" />
+
+
+---
+
 ### Root Cause Isolation
 The crisis was traced to a **server-side `PermissionDenied` error** on the CKYC government SFTP server — confirmed not a network issue, not a client misconfiguration. This distinction matters for incident response escalation.
 
