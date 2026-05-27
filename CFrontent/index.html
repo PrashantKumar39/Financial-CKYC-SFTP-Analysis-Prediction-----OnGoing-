@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CKYC SFTP Analyser</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <div id="particles-js"></div>
+
+    <!-- Scan line overlay -->
+    <div class="scanlines"></div>
+
+    <!-- ── NAV ─────────────────────────────────────────── -->
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <div class="nav-brand">
+                <div class="brand-logo">
+                    <span class="brand-dot"></span>
+                </div>
+                <span class="brand-text">CKYC</span><span class="brand-accent">SFTP</span>
+            </div>
+            <ul class="nav-links">
+                <li><a class="nav-link active" href="#hero">Overview</a></li>
+                <li><a class="nav-link" href="#dashboard">Dashboard</a></li>
+                <li><a class="nav-link" href="#predict">Predict</a></li>
+                <li><a class="nav-link" href="#about">About</a></li>
+            </ul>
+            <div class="api-pill" id="api-pill">
+                <span class="api-dot" id="api-dot"></span>
+                <span id="api-label">checking…</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ── HERO — full viewport ────────────────────────── -->
+    <section class="hero" id="hero">
+
+        <!-- background grid -->
+        <div class="hero-grid-bg"></div>
+
+        <div class="hero-content">
+            <div class="hero-left">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    ML · Compliance Infrastructure · RegTech
+                </div>
+
+                <h1 class="hero-title">
+                    <span class="title-line">SFTP Failure</span>
+                    <span class="title-line"><em class="hero-accent">Analysis</em> &amp;</span>
+                    <span class="title-line">Prediction</span>
+                </h1>
+
+                <p class="hero-desc">
+                    68,177 CKYC connection logs analysed over 30 days across
+                    5 institutional users. A 6-day outage traced, root-caused,
+                    and predicted using XGBoost.
+                </p>
+
+                <div class="hero-kpis" id="hero-kpis">
+                    <div class="kpi">
+                        <span class="kpi-val" id="k-total">—</span>
+                        <span class="kpi-lbl">Total Logs</span>
+                    </div>
+                    <div class="kpi-sep"></div>
+                    <div class="kpi">
+                        <span class="kpi-val red" id="k-fail">—</span>
+                        <span class="kpi-lbl">Failure Rate</span>
+                    </div>
+                    <div class="kpi-sep"></div>
+                    <div class="kpi">
+                        <span class="kpi-val amber" id="k-crisis">—</span>
+                        <span class="kpi-lbl">Crisis Days</span>
+                    </div>
+                    <div class="kpi-sep"></div>
+                    <div class="kpi">
+                        <span class="kpi-val green" id="k-model">—</span>
+                        <span class="kpi-lbl">ML Model</span>
+                    </div>
+                </div>
+
+                <div class="hero-btns">
+                    <a href="#dashboard" class="btn-primary">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="7" height="7" />
+                            <rect x="14" y="3" width="7" height="7" />
+                            <rect x="3" y="14" width="7" height="7" />
+                            <rect x="14" y="14" width="7" height="7" />
+                        </svg>
+                        View Dashboard
+                    </a>
+                    <a href="#predict" class="btn-ghost">
+                        Try Prediction
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-right">
+                <!-- animated orbital rings -->
+                <div class="ring-wrap">
+                    <div class="ring ring-outer"></div>
+                    <div class="ring ring-mid"></div>
+                    <div class="ring ring-inner"></div>
+                    <!-- tick marks -->
+                    <div class="ring-ticks">
+                        <span class="tick" style="--a:0deg"></span>
+                        <span class="tick" style="--a:45deg"></span>
+                        <span class="tick" style="--a:90deg"></span>
+                        <span class="tick" style="--a:135deg"></span>
+                        <span class="tick" style="--a:180deg"></span>
+                        <span class="tick" style="--a:225deg"></span>
+                        <span class="tick" style="--a:270deg"></span>
+                        <span class="tick" style="--a:315deg"></span>
+                    </div>
+                    <div class="ring-core">
+                        <span class="ring-label">Failure Rate</span>
+                        <span class="ring-pct">62.1%</span>
+                        <span class="ring-sub">68,177 logs · 30 days</span>
+                    </div>
+                </div>
+
+                <!-- floating stat chips -->
+                <div class="float-chip chip-1">
+                    <span class="chip-icon red">⚠</span>
+                    <div>
+                        <span class="chip-val">98%</span>
+                        <span class="chip-desc">Crisis peak</span>
+                    </div>
+                </div>
+                <div class="float-chip chip-2">
+                    <span class="chip-icon green">✓</span>
+                    <div>
+                        <span class="chip-val">XGBoost</span>
+                        <span class="chip-desc">Active model</span>
+                    </div>
+                </div>
+                <div class="float-chip chip-3">
+                    <span class="chip-icon amber">↻</span>
+                    <div>
+                        <span class="chip-val">41.3%</span>
+                        <span class="chip-desc">Retry bursts</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- scroll cue -->
+        <a href="#dashboard" class="scroll-cue" aria-label="Scroll to dashboard">
+            <span class="scroll-label">Dashboard</span>
+            <span class="scroll-arrow">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M12 5v14M5 12l7 7 7-7" />
+                </svg>
+            </span>
+        </a>
+    </section>
+
+    <!-- ── CRISIS ALERT ──────────────────────────────────── -->
+    <div class="crisis-bar">
+        <div class="crisis-pulse"></div>
+        <span class="crisis-icon">!</span>
+        <p><strong>Crisis Window — Feb 14–19, 2026:</strong> Near-total outage (~98% failure rate) caused by server-side
+            PermissionDenied error, cascading into retry storms across all 5 users simultaneously.</p>
+    </div>
+
+    <!-- ── DASHBOARD ─────────────────────────────────────── -->
+    <section class="section" id="dashboard">
+        <div class="wrap">
+            <div class="section-hd">
+                <div>
+                    <p class="section-tag">Analytics</p>
+                    <h2 class="section-title">Live Dashboard</h2>
+                </div>
+                <div class="phase-tags">
+                    <span class="ptag green">Pre-crisis</span>
+                    <span class="ptag red">Crisis</span>
+                    <span class="ptag amber">Recovery</span>
+                    <span class="ptag blue">Normal</span>
+                </div>
+            </div>
+
+            <!-- metric cards -->
+            <div class="metric-row" id="metric-row">
+                <div class="mc">
+                    <div class="mc-icon blue">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path
+                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </div>
+                    <div class="mc-body">
+                        <span class="mc-val" id="mc-logs">68,177</span>
+                        <span class="mc-lbl">Total Requests</span>
+                    </div>
+                </div>
+                <div class="mc">
+                    <div class="mc-icon red">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path
+                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                    </div>
+                    <div class="mc-body">
+                        <span class="mc-val red" id="mc-fail">62.1%</span>
+                        <span class="mc-lbl">Failure Rate</span>
+                    </div>
+                </div>
+                <div class="mc">
+                    <div class="mc-icon amber">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <div class="mc-body">
+                        <span class="mc-val amber">6 Days</span>
+                        <span class="mc-lbl">Crisis Window</span>
+                    </div>
+                </div>
+                <div class="mc">
+                    <div class="mc-icon purple">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path
+                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                    </div>
+                    <div class="mc-body">
+                        <span class="mc-val amber">41.3%</span>
+                        <span class="mc-lbl">Retry Bursts</span>
+                    </div>
+                </div>
+                <div class="mc">
+                    <div class="mc-icon teal">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path
+                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </div>
+                    <div class="mc-body">
+                        <span class="mc-val">5</span>
+                        <span class="mc-lbl">Users Monitored</span>
+                    </div>
+                </div>
+                <div class="mc">
+                    <div class="mc-icon green">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path
+                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <div class="mc-body">
+                        <span class="mc-val green">XGBoost</span>
+                        <span class="mc-lbl">Active Model</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- charts -->
+            <div class="chart-grid">
+                <div class="chart-card span2">
+                    <div class="chart-hd">
+                        <span class="chart-title">Daily Failure Rate vs Request Volume</span>
+                        <span class="crisis-chip">Crisis: Feb 14–19</span>
+                    </div>
+                    <div class="chart-body"><canvas id="c-daily"></canvas></div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-hd"><span class="chart-title">Failures per User</span></div>
+                    <div class="chart-body"><canvas id="c-user"></canvas></div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-hd"><span class="chart-title">Error Type Distribution</span></div>
+                    <div class="chart-body"><canvas id="c-error"></canvas></div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-hd"><span class="chart-title">Failure Rate by Operation</span></div>
+                    <div class="chart-body"><canvas id="c-op"></canvas></div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-hd"><span class="chart-title">System Phase Timeline</span></div>
+                    <div class="chart-body phase-timeline">
+                        <div class="phase-row">
+                            <div class="phase-meta">
+                                <span class="phase-name">Pre-crisis</span>
+                                <span class="phase-date">Feb 12–13</span>
+                            </div>
+                            <div class="phase-bar-wrap">
+                                <div class="phase-bar green" style="width:8%"></div>
+                            </div>
+                            <span class="phase-pct">8%</span>
+                        </div>
+                        <div class="phase-row">
+                            <div class="phase-meta">
+                                <span class="phase-name">Crisis</span>
+                                <span class="phase-date">Feb 14–19</span>
+                            </div>
+                            <div class="phase-bar-wrap">
+                                <div class="phase-bar red" style="width:20%"></div>
+                            </div>
+                            <span class="phase-pct">20%</span>
+                        </div>
+                        <div class="phase-row">
+                            <div class="phase-meta">
+                                <span class="phase-name">Recovery</span>
+                                <span class="phase-date">Feb 20–22</span>
+                            </div>
+                            <div class="phase-bar-wrap">
+                                <div class="phase-bar amber" style="width:10%"></div>
+                            </div>
+                            <span class="phase-pct">10%</span>
+                        </div>
+                        <div class="phase-row">
+                            <div class="phase-meta">
+                                <span class="phase-name">Normal</span>
+                                <span class="phase-date">Feb 23–Mar 13</span>
+                            </div>
+                            <div class="phase-bar-wrap">
+                                <div class="phase-bar blue" style="width:62%"></div>
+                            </div>
+                            <span class="phase-pct">62%</span>
+                        </div>
+                        <div class="root-cause-box">
+                            Root cause isolated: <strong>PermissionDenied</strong> on government SFTP server.
+                            Not network, not client config — confirmed server-side.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── PREDICTOR ─────────────────────────────────────── -->
+    <section class="section section-alt" id="predict">
+        <div class="wrap">
+            <div class="section-hd">
+                <div>
+                    <p class="section-tag">ML Model</p>
+                    <h2 class="section-title">Failure Predictor</h2>
+                </div>
+                <div class="model-badge">
+                    <span class="model-dot"></span>
+                    XGBoost · 8 features
+                </div>
+            </div>
+
+            <div class="predict-grid">
+                <div class="form-card">
+                    <h3 class="form-title">Transfer Parameters</h3>
+                    <p class="form-desc">Set the SFTP transfer details below. The model uses the same features it was
+                        trained on — operation type, user, timing, and context.</p>
+
+                    <div class="fg">
+                        <label class="fl">Operation Type</label>
+                        <select class="fs" id="f-op">
+                            <option value="upload">Upload</option>
+                            <option value="download">Download</option>
+                            <option value="bulk_download">Bulk Download</option>
+                            <option value="list">List</option>
+                            <option value="delete">Delete</option>
+                            <option value="mkdir">Mkdir</option>
+                            <option value="rename">Rename</option>
+                        </select>
+                    </div>
+
+                    <div class="fg">
+                        <label class="fl">User</label>
+                        <select class="fs" id="f-user">
+                            <option value="user1">User 1</option>
+                            <option value="user2">User 2</option>
+                            <option value="user3">User 3</option>
+                            <option value="user4">User 4</option>
+                            <option value="user5">User 5</option>
+                        </select>
+                    </div>
+
+                    <div class="fg">
+                        <label class="fl">Hour of Day — <span id="lbl-hour">14</span>:00</label>
+                        <input type="range" class="frange" id="f-hour" min="0" max="23" value="14"
+                            oninput="document.getElementById('lbl-hour').textContent=this.value" />
+                        <div class="range-ends"><span>00:00</span><span>23:00</span></div>
+                    </div>
+
+                    <div class="fg">
+                        <label class="fl">Elapsed Seconds — <span id="lbl-el">5</span>s</label>
+                        <input type="range" class="frange" id="f-elapsed" min="0" max="120" value="5"
+                            oninput="document.getElementById('lbl-el').textContent=this.value" />
+                        <div class="range-ends"><span>0s</span><span>120s</span></div>
+                    </div>
+
+                    <div class="fg">
+                        <label class="fl">Week Number — Week <span id="lbl-week">7</span></label>
+                        <input type="range" class="frange" id="f-week" min="6" max="11" value="7"
+                            oninput="document.getElementById('lbl-week').textContent=this.value" />
+                        <div class="range-ends"><span>Wk 6</span><span>Wk 11</span></div>
+                    </div>
+
+                    <div class="fg">
+                        <label class="fl">Context Flags</label>
+                        <div class="checks">
+                            <label class="check">
+                                <input type="checkbox" id="f-weekend" />
+                                <span class="cbox"></span>
+                                Weekend transfer
+                            </label>
+                            <label class="check">
+                                <input type="checkbox" id="f-critical" checked />
+                                <span class="cbox"></span>
+                                Critical operation (upload / bulk_download)
+                            </label>
+                        </div>
+                    </div>
+
+                    <button class="predict-btn" id="predict-btn" onclick="runPrediction()">
+                        <span id="btn-txt">Run Prediction</span>
+                    </button>
+                </div>
+
+                <!-- result panel -->
+                <div class="result-card" id="result-card">
+                    <div class="result-idle" id="r-idle">
+                        <div class="idle-icon">
+                            <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                            </svg>
+                        </div>
+                        <p>Set parameters and click<br /><strong>Run Prediction</strong></p>
+                    </div>
+
+                    <div class="result-out hidden" id="r-out">
+                        <div class="verdict-badge" id="verdict-badge"></div>
+
+                        <div class="prob-ring-wrap">
+                            <svg class="prob-ring" viewBox="0 0 120 120">
+                                <circle class="pr-bg" cx="60" cy="60" r="48" />
+                                <circle class="pr-fill" id="pr-fill" cx="60" cy="60" r="48" stroke-dasharray="301.6"
+                                    stroke-dashoffset="301.6" />
+                            </svg>
+                            <div class="prob-text">
+                                <span class="prob-pct" id="prob-pct">0%</span>
+                                <span class="prob-lbl">failure prob.</span>
+                            </div>
+                        </div>
+
+                        <div class="risk-chip" id="risk-chip"></div>
+                        <div class="result-rows" id="result-rows"></div>
+                    </div>
+
+                    <div class="result-err hidden" id="r-err">
+                        <div class="err-icon">✕</div>
+                        <p id="err-msg"></p>
+                        <p class="err-hint">Make sure the backend server is running:<br><code>node server.js</code></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── ABOUT ─────────────────────────────────────────── -->
+    <section class="section" id="about">
+        <div class="wrap">
+            <div class="section-hd">
+                <div>
+                    <p class="section-tag">Project</p>
+                    <h2 class="section-title">About This Work</h2>
+                </div>
+            </div>
+            <div class="about-grid">
+                <div class="about-card">
+                    <div class="about-num">01</div>
+                    <h4>Problem</h4>
+                    <p>India's CKYC SFTP system had a 62.1% failure rate across 5 institutional customers, including a
+                        near-total 6-day blackout. No early warning system existed. Regulatory penalties were a real
+                        risk.</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-num">02</div>
+                    <h4>Approach</h4>
+                    <p>End-to-end data science on 68,177 logs — 10 EDA analyses, feature engineering (burst count,
+                        rolling failure rate, phase labeling), chronological 80/10/10 split, SMOTE for class imbalance.
+                    </p>
+                </div>
+                <div class="about-card">
+                    <div class="about-num">03</div>
+                    <h4>Model</h4>
+                    <p>XGBoost chosen as best performer after comparing Logistic Regression, Decision Tree, and Random
+                        Forest. Leaky features explicitly removed. Gaussian noise added for generalisation.</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-num">04</div>
+                    <h4>Impact</h4>
+                    <p>Predictive failure detection, retry storm quantification (41.3%), server-side root-cause
+                        isolation, and a reusable behavioral feature library for any SFTP compliance monitoring stack.
+                    </p>
+                </div>
+            </div>
+            <div class="stack-row">
+                <span class="st">Python</span><span class="st">XGBoost</span>
+                <span class="st">Scikit-learn</span><span class="st">SMOTE</span>
+                <span class="st">Pandas</span><span class="st">Node.js</span>
+                <span class="st">Express</span><span class="st">Chart.js</span>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="wrap footer-inner">
+            <span>CKYC SFTP Failure Analyser · ML Project</span>
+            <span>XGBoost · Node.js · Chart.js</span>
+        </div>
+    </footer>
+
+    <script src="particles-config.js"></script>
+    <script src="app.js"></script>
+
+</body>
+
+</html>
